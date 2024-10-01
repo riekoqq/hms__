@@ -1,6 +1,7 @@
 from .forms import CustomLoginForm
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import redirect, render
+from django.urls import reverse_lazy
 
 
 def custom_login(request):
@@ -18,3 +19,8 @@ def custom_login(request):
         form = CustomLoginForm()
 
     return render(request, "account/login.html", {"form": form})
+
+
+def custom_logout(request):
+    logout(request)
+    return redirect(reverse_lazy("account:login"))

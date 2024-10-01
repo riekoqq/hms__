@@ -1,5 +1,7 @@
 */__pycache__/
 *.py[cod]
 *.pyo
-venv
+.vscode/
+dist/
+venv/
 db.sqlite3
