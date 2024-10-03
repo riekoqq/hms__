@@ -18,7 +18,12 @@ class Patient(models.Model):
         ("F", "Female"),
         ("O", "Other"),
     ]
-    STATUS_CHOICES = [("Inactive", "Inactive"), ("Active", "Active")]
+    STATUS_CHOICES = [
+        ("Inactive", "Inactive"),
+        ("Active", "Active"),
+        ("Admission", "Admission"),
+        ("Discharge", "Discharge"),
+    ]
 
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)

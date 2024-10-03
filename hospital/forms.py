@@ -9,7 +9,6 @@ class HospitalForm(forms.ModelForm):
 
 
 class PatientForm(forms.ModelForm):
-    STATUS_CHOICES = [("Inactive", "Inactive"), ("Active", "Active")]
 
     class Meta:
         model = Patient
@@ -45,7 +44,14 @@ class MedicalRecordForm(forms.ModelForm):
         fields = ["patient", "diagnosis", "treatment", "medications", "date_of_visit"]
 
 
-class PatientTransferForm(forms.ModelForm):
-    class Meta:
-        model = PatientTransfer
-        fields = ["patient", "from_hospital", "to_hospital"]
+class PatientTransferForm(forms.Form):
+    patient = forms.ModelChoiceField(
+        queryset=Patient.objects.all(),
+        widget=forms.Select(attrs={"class": "form-control"}),
+        label="Select Patient",
+    )
+    hospital = forms.ModelChoiceField(
+        queryset=Hospital.objects.all(),
+        widget=forms.Select(attrs={"class": "form-control"}),
+        label="Select Hospital",
+    )

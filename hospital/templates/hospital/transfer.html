@@ -7,4 +7,37 @@
 
 
 {% block content %}
+<div class="page-header">
+    <div class="row">
+        <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+            <div class="card-title">Form</div>
+            </div>
+            <div class="card-body">
+            <div class="row">
+                <div class="col-12">
+                    {% if messages %}
+                        <div class="container">
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                    <form action="{% url 'hospital:hospital-transfer' %}" method="post">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <div class="card-action">
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock content %}
