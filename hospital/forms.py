@@ -9,6 +9,8 @@ class HospitalForm(forms.ModelForm):
 
 
 class PatientForm(forms.ModelForm):
+    STATUS_CHOICES = [("Inactive", "Inactive"), ("Active", "Active")]
+
     class Meta:
         model = Patient
         fields = [
@@ -20,6 +22,21 @@ class PatientForm(forms.ModelForm):
             "is_admitted",
             "status",
         ]
+
+        widgets = {
+            "first_name": forms.TextInput(attrs={"class": "form-control"}),
+            "last_name": forms.TextInput(attrs={"class": "form-control"}),
+            "gender": forms.Select(attrs={"class": "form-control"}),
+            "birthdate": forms.DateInput(
+                attrs={
+                    "class": "form-control",
+                    "type": "date",  # Use HTML5 date input
+                }
+            ),
+            "hospital": forms.Select(attrs={"class": "form-control"}),
+            "is_admitted": forms.CheckboxInput(attrs={"class": "form-check-input"}),
+            "status": forms.Select(attrs={"class": "form-control"}),
+        }
 
 
 class MedicalRecordForm(forms.ModelForm):

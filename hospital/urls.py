@@ -8,3 +8,14 @@ urlpatterns = [
     path("", views.hospital_page, name="hospital"),
     path("transfer/", views.transfer_page, name="hospital-transfer"),
 ]
+
+# patients url
+urlpatterns += [
+    path("patient/", views.manage_patient_page, name="patient"),
+    path("patient/add/", views.add_patient_page, name="add-patient"),
+    path(
+        "patient/admission-discharge/",
+        views.admission_discharge_page,
+        name="admission-discharge",
+    ),
+]

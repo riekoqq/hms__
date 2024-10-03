@@ -18,7 +18,7 @@ class Patient(models.Model):
         ("F", "Female"),
         ("O", "Other"),
     ]
-    STATUS_CHOICES = [(0, "Inactive"), (1, "Active")]
+    STATUS_CHOICES = [("Inactive", "Inactive"), ("Active", "Active")]
 
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
@@ -28,7 +28,7 @@ class Patient(models.Model):
         Hospital, on_delete=models.CASCADE, related_name="patients"
     )
     is_admitted = models.BooleanField(default=False)
-    status = models.CharField(max_length=1, choices=STATUS_CHOICES)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
