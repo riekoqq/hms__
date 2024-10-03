@@ -45,7 +45,6 @@
                 <!-- End Header -->
 
                 <div class="container">
-                    {% block content %}
                     <div class="page-inner">
                         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row pt-2 pb-4">
                             <div>
@@ -60,8 +59,9 @@
                             </div>
                             {% endblock heading_action %}
                         </div>
+                        {% block content %}
+                        {% endblock content %}
                     </div>
-                    {% endblock content %}
                 </div>
             </div>
             <!-- End Custom template -->

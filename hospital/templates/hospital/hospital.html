@@ -1,0 +1,45 @@
+{% extends "layout/base.html" %}
+
+{% block heading %}Hospitals{% endblock heading %}
+{% block mute_heading %}View list of Hospitals{% endblock mute_heading %}
+
+{% block heading_action %}{% endblock heading_action %}
+
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">List of Available Hospitals</div>
+            </div>
+            <div class="card-body">
+                <table class="table mt-3">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Location</th>
+                            <th scope="col">Patient Count</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for hospital in hospitals %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ hospital.name }}</td>
+                            <td>{{ hospital.location }}</td>
+                            <td>{{ hospital.patients.count }}</td>
+                            <td>
+                                <a class="btn btn-primary" href="#!">View</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
