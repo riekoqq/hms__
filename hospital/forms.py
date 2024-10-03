@@ -55,3 +55,16 @@ class PatientTransferForm(forms.Form):
         widget=forms.Select(attrs={"class": "form-control"}),
         label="Select Hospital",
     )
+
+
+class PatientStatusUpdateForm(forms.Form):
+    patient = forms.ModelChoiceField(
+        queryset=Patient.objects.all(),  # QuerySet to display all patients
+        widget=forms.Select(attrs={"class": "form-control"}),
+        label="Select Patient",
+    )
+    status = forms.ChoiceField(
+        choices=Patient.STATUS_CHOICES,  # Choices for status
+        widget=forms.Select(attrs={"class": "form-control"}),
+        label="Select Status",
+    )
