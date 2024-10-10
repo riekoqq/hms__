@@ -34,7 +34,7 @@
                             <td>{{ patient.birthdate }}</td>
                             <td>{{ patient.status }}</td>
                             <td>
-                                <a class="btn btn-primary" href="#!">View</a>
+                                <a class="btn btn-primary" href="{% url 'hospital:patient-detail' patient_id=patient.id %}">View</a>
                             </td>
                         </tr>
                     {% endfor %}

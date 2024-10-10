@@ -4,7 +4,7 @@ from .forms import (
     PatientTransferForm,
     PatientStatusUpdateForm,
 )
-from .models import Hospital
+from .models import Hospital, Patient
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
@@ -55,6 +55,20 @@ def transfer_page(request):
 @login_required
 def manage_patient_page(request):
     return render(request, "hospital/manage-patient.html")
+
+
+@login_required
+def patient_detail_page(request, patient_id):
+    patient = Patient.objects.get(pk=patient_id)
+    medical_records = patient.medical_records.all()
+
+    print("patient: ", patient)
+    print("medical records: ", medical_records)
+
+    context = {}
+    context["patient"] = patient
+    context["medical_records"] = medical_records
+    return render(request, "hospital/patient-detail.html", context)
 
 
 @login_required

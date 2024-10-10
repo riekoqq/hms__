@@ -24,4 +24,5 @@ urlpatterns += [
         views.add_medical_record_page,
         name="add-medical-record",
     ),
+    path("patient/<int:patient_id>/", views.patient_detail_page, name="patient-detail"),
 ]
