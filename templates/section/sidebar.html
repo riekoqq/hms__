@@ -17,6 +17,8 @@
         </div>
         <!-- End Logo Header -->
     </div>
+
+    {% if user.is_staff %}
     <div class="sidebar-wrapper scrollbar scrollbar-inner">
         <div class="sidebar-content">
             <ul class="nav nav-secondary">
@@ -129,4 +131,31 @@
             </ul>
         </div>
     </div>
+
+    {% else %}
+
+    <div class="sidebar-wrapper scrollbar scrollbar-inner">
+        <div class="sidebar-content">
+            <ul class="nav nav-secondary">
+                <li class="nav-item">
+                    <a data-bs-toggle="collapse" href="#dashboard" class="collapsed" aria-expanded="false">
+                        <i class="fas fa-home"></i>
+                        <p>Porfile</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="dashboard">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{% url 'home' %}">
+                                    <span class="sub-item">View Profile</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    {% endif %}
 </div>
