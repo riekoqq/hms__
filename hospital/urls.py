@@ -19,4 +19,9 @@ urlpatterns += [
         views.admission_discharge_page,
         name="admission-discharge",
     ),
+    path(
+        "patient/add-medical-record/",
+        views.add_medical_record_page,
+        name="add-medical-record",
+    ),
 ]

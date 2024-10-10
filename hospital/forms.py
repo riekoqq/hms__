@@ -64,6 +64,19 @@ class MedicalRecordForm(forms.ModelForm):
         model = MedicalRecord
         fields = ["patient", "diagnosis", "treatment", "medications", "date_of_visit"]
 
+        widgets = {
+            "patient": forms.Select(attrs={"class": "form-control"}),
+            "diagnosis": forms.TextInput(attrs={"class": "form-control"}),
+            "treatment": forms.Textarea(attrs={"class": "form-control"}),
+            "medications": forms.Textarea(attrs={"class": "form-control"}),
+            "date_of_visit": forms.DateInput(
+                attrs={
+                    "class": "form-control",
+                    "type": "date",
+                }
+            ),
+        }
+
 
 class PatientTransferForm(forms.Form):
     patient = forms.ModelChoiceField(

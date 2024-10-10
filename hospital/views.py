@@ -1,4 +1,9 @@
-from .forms import PatientForm, PatientTransferForm, PatientStatusUpdateForm
+from .forms import (
+    MedicalRecordForm,
+    PatientForm,
+    PatientTransferForm,
+    PatientStatusUpdateForm,
+)
 from .models import Hospital
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -90,3 +95,22 @@ def admission_discharge_page(request):
         form = PatientStatusUpdateForm()
 
     return render(request, "hospital/admission-discharge.html", {"form": form})
+
+
+@login_required
+def add_medical_record_page(request):
+    if request.method == "POST":
+        form = MedicalRecordForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Medical record created successfully!")
+        else:
+            messages.error(
+                request,
+                "There was an error creating the medical record. Please try again.",
+            )
+    else:
+        form = MedicalRecordForm()
+
+    return render(request, "hospital/add-medical-record.html", {"form": form})
