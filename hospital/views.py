@@ -15,6 +15,16 @@ def hospital_page(request):
 
 
 @login_required
+def hospital_detail_page(request, hospital_id):
+    hospital = Hospital.objects.get(pk=hospital_id)
+
+    context = {}
+    context["hospital"] = hospital
+    context["patients"] = hospital.patients.all().order_by("-created_at")
+    return render(request, "hospital/hospital-detail.html", context)
+
+
+@login_required
 def transfer_page(request):
     if request.method == "POST":
         form = PatientTransferForm(request.POST)

@@ -11,7 +11,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <div class="card-title">List of Available Hospitals</div>
+                <div class="card-title">List of Patients in {{ hospital }}</div>
             </div>
             <div class="card-body">
                 <table class="table mt-3">
@@ -19,20 +19,22 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Name</th>
-                            <th scope="col">Location</th>
-                            <th scope="col">Patient Count</th>
+                            <th scope="col">Gender</th>
+                            <th scope="col">Birthdate</th>
+                            <th scope="col">Status</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                    {% for hospital in hospitals %}
+                    {% for patient in patients %}
                         <tr>
                             <td>{{ forloop.counter }}</td>
-                            <td>{{ hospital.name }}</td>
-                            <td>{{ hospital.location }}</td>
-                            <td>{{ hospital.patients.count }}</td>
+                            <td>{{ patient.first_name }} {{ patient.last_name }}</td>
+                            <td>{{ patient.gender }}</td>
+                            <td>{{ patient.birthdate }}</td>
+                            <td>{{ patient.status }}</td>
                             <td>
-                                <a class="btn btn-primary" href="{% url 'hospital:hospital-detail' hospital_id=hospital.id %}">View</a>
+                                <a class="btn btn-primary" href="#!">View</a>
                             </td>
                         </tr>
                     {% endfor %}

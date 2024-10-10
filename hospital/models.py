@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -25,6 +26,9 @@ class Patient(models.Model):
         ("Discharge", "Discharge"),
     ]
 
+    user = models.OneToOneField(
+        User, on_delete=models.CASCADE, related_name="patient_info"
+    )
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     gender = models.CharField(max_length=1, choices=GENDER_CHOICES)

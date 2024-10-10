@@ -7,6 +7,7 @@ app_name = "hospital"
 urlpatterns = [
     path("", views.hospital_page, name="hospital"),
     path("transfer/", views.transfer_page, name="hospital-transfer"),
+    path("<int:hospital_id>/", views.hospital_detail_page, name="hospital-detail"),
 ]
 
 # patients url
