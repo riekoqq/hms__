@@ -8,6 +8,7 @@ def home_page(request):
     context = {}
 
     if user.is_staff:
+        m = False
         pass
     else:
         patient = user.patient_info
