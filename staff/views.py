@@ -73,10 +73,11 @@ def time_out_page(request):
 def attendance_history_page(request):
     user = request.user
     user_info = user.user_info
-    attendance_records = user_info.attendance_records.all()
+    attendance_records = user_info.attendance_records.all().order_by("-date")
 
-    print(attendance_records)
-    return render(request, "staff/attendance-history.html")
+    return render(
+        request, "staff/attendance-history.html", {"records": attendance_records}
+    )
 
 
 @login_required
