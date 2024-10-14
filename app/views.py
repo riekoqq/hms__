@@ -1,4 +1,7 @@
+from hospital.models import Hospital, Patient
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 from django.shortcuts import render
 
 
@@ -8,8 +11,27 @@ def home_page(request):
     context = {}
 
     if user.is_staff:
-        m = False
-        pass
+        hospitals = Hospital.objects.all().order_by("-created_at")
+        patients = Patient.objects.all().order_by("-created_at")
+
+        hospital_paginator = Paginator(hospitals, 10)
+        patient_paginator = Paginator(patients, 10)
+
+        hospital_page_number = request.GET.get("hospital_page", 1)
+        patient_page_number = request.GET.get("patient_page", 1)
+
+        hospital_page = hospital_paginator.get_page(hospital_page_number)
+        patient_page = patient_paginator.get_page(patient_page_number)
+
+        number_of_hospitals = hospitals.count()
+        number_of_staffs = User.objects.filter(is_staff=True).count()
+        number_of_patients = patients.count()
+
+        context["hospital_page"] = hospital_page
+        context["patient_page"] = patient_page
+        context["number_of_hospitals"] = number_of_hospitals
+        context["number_of_staffs"] = number_of_staffs
+        context["number_of_patients"] = number_of_patients
     else:
         patient = user.patient_info
         medical_records = patient.medical_records.all()
@@ -22,4 +44,21 @@ def home_page(request):
 
 @login_required
 def profile_page(request):
-    return render(request, "app/profile.html")
+    user = request.user
+    context = {}
+
+    if user.is_staff:
+        user_info = user.user_info
+        attendance_records = user_info.attendance_records.all().order_by("-date")
+        shift_schedules = user_info.shift_schedules.all()[0].get_shift_schedule_array()
+
+        context["records"] = attendance_records
+        context["shift"] = shift_schedules
+    else:
+        patient = user.patient_info
+        medical_records = patient.medical_records.all()
+
+        context["patient"] = patient
+        context["medical_records"] = medical_records
+
+    return render(request, "app/profile.html", context)

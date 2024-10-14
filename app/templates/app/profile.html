@@ -2,3 +2,138 @@
 
 {% block heading %}Profile{% endblock heading %}
 {% block mute_heading %}View your Profile Information{% endblock mute_heading %}
+
+{% block heading_action %}{% endblock heading_action %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body pb-0">
+                <div class="row align-items-center">
+                    <div class="col-md-3">
+                        <div class="text-center border-end">
+                            <img src="https://www.freepik.com/premium-vector/user-profile-icon-flat-style-member-avatar-vector-illustration-isolated-background-human-permission-sign-business-concept_44276367.htm" class="img-fluid avatar-xxl rounded-circle" alt="">
+                            <h4 class="text-primary font-size-20 mt-3 mb-2">
+                                {% if user.is_staff %}
+                                {{ user.first_name }} {{ user.last_name }}
+                                {% else %}
+                                {{ patient.first_name }} {{ patient.last_name }}
+                                {% endif %}
+                            </h4>
+                        </div>
+                    </div><!-- end col -->
+                    <div class="col-md-9">
+                        <div class="ms-3">
+                            <div>
+                                <h4 class="card-title mb-2">Information</h4>
+                            </div>
+                            <div class="row my-4">
+                                <div class="col-md-12">
+                                    <div>
+                                        {% if user.is_staff %}
+                                        <p class="text-muted mb-2 fw-medium"><i class="mdi mdi-email-outline me-2"></i>Role {{ user.user_info.role }}
+                                        </p>
+                                        <p class="text-muted fw-medium mb-0"><i class="mdi mdi-phone-in-talk-outline me-2"></i>Qualification {{ user.user_info.qualifications }}
+                                        </p>
+                                        <p class="text-muted fw-medium mb-0"><i class="mdi mdi-phone-in-talk-outline me-2"></i>Contact {{ user.user_info.contact_number }}
+                                        </p>
+                                        {% else %}
+                                        <p class="text-muted mb-2 fw-medium"><i class="mdi mdi-email-outline me-2"></i>Gender {{ patient.gender }}
+                                        </p>
+                                        <p class="text-muted fw-medium mb-0"><i class="mdi mdi-phone-in-talk-outline me-2"></i>Birthdate {{ patient.birthdate }}
+                                        </p>
+                                        <p class="text-muted fw-medium mb-0"><i class="mdi mdi-phone-in-talk-outline me-2"></i>Status {{ patient.status }}
+                                        </p>                                        
+                                        {% endif %}
+                                    </div>
+                                </div><!-- end col -->
+                            </div><!-- end row -->
+                        </div>
+                    </div><!-- end col -->
+                </div><!-- end row -->
+            </div><!-- end card body -->
+        </div><!-- end card -->
+
+        {% if user.is_staff %}
+
+            <h3>Schedule</h3>
+            <table class="table mt-3">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Day</th>
+                        <th scope="col">Start</th>
+                        <th scope="col">End</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for schedule in shift %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ schedule.day }}</td>
+                        <td>{{ schedule.shift_start }}</td>
+                        <td>{{ schedule.shift_end }}</td>
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+            <br/>
+
+            <h3>Attendance History</h3>
+            <table class="table mt-3">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Time in</th>
+                        <th scope="col">Time out</th>
+                        <th scope="col">Late</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for record in records %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ record.date }}</td>
+                        <td>{{ record.time_in }}</td>
+                        <td>{{ record.time_out }}</td>
+                        <td>{{ record.is_late }}</td>
+    
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        
+        {% else %}
+
+        <table class="table mt-3">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Diagnosis</th>
+                    <th scope="col">Treatment</th>
+                    <th scope="col">Medication</th>
+                    <th scope="col">Date of Visit</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for record in medical_records %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ record.diagnosis }}</td>
+                    <td>{{ record.treatment }}</td>
+                    <td>{{ record.medications }}</td>
+                    <td>{{ record.date_of_visit }}</td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
+        {% endif %}
+    </div><!-- end col -->
+</div>
+{% endblock content %}
