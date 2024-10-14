@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     "hospital",
     "inventory",
     "room",
+    "staff",
 ]
 
 MIDDLEWARE = [

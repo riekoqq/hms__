@@ -1,0 +1,36 @@
+{% extends "layout/base.html" %}
+
+{% block heading %}Shift Schedule{% endblock heading %}
+{% block mute_heading %}View your shift Schedule{% endblock mute_heading %}
+
+{% block heading_action %}{% endblock heading_action %}
+
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <table class="table mt-3">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Day</th>
+                    <th scope="col">Start</th>
+                    <th scope="col">End</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for schedule in shift %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ schedule.day }}</td>
+                    <td>{{ schedule.shift_start }}</td>
+                    <td>{{ schedule.shift_end }}</td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div><!-- end col -->
+</div>
+</div>
+{% endblock content %}

@@ -55,6 +55,18 @@ class ShiftSchedule(models.Model):
         days_str = ", ".join([day.get_name_display() for day in self.days.all()])
         return f"{self.user_info.user.username} - {days_str} ({self.shift_start} to {self.shift_end})"
 
+    def get_shift_schedule_array(self):
+        schedule_array = []
+        for day in self.days.all():
+            schedule_array.append(
+                {
+                    "day": day.get_name_display(),
+                    "shift_start": self.shift_start.strftime("%I:%M %p"),
+                    "shift_end": self.shift_end.strftime("%I:%M %p"),
+                }
+            )
+        return schedule_array
+
 
 class Attendance(models.Model):
     user_info = models.ForeignKey(
