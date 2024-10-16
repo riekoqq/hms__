@@ -87,3 +87,14 @@ def shift_schedule_page(request):
     shift_schedules = user_info.shift_schedules.all()[0].get_shift_schedule_array()
 
     return render(request, "staff/shift-schedule.html", {"shift": shift_schedules})
+
+
+@login_required
+def payroll_page(request):
+    user_info = request.user.user_info
+
+    return render(
+        request,
+        "staff/payroll.html",
+        {"salary": user_info.salary_info.all().order_by("-created_at")},
+    )

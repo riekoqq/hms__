@@ -1,0 +1,40 @@
+{% extends "layout/base.html" %}
+
+{% block heading %}Payroll History{% endblock heading %}
+{% block mute_heading %}View your salary history (by admin){% endblock mute_heading %}
+
+{% block heading_action %}{% endblock heading_action %}
+
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <table class="table mt-3">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Salary</th>
+                    <th scope="col">Bonuses</th>
+                    <th scope="col">Deductions</th>
+                    <th scope="col">Total</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for sal in salary %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ sal.created_at }}</td>
+                    <td>{{ sal.base_salary }}</td>
+                    <td>{{ sal.bonuses }}</td>
+                    <td>{{ sal.deductions }}</td>
+                    <td>{{ sal.total_salary }}</td>
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div><!-- end col -->
+</div>
+</div>
+{% endblock content %}

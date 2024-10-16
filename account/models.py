@@ -25,6 +25,27 @@ class UserInfo(models.Model):
         return f"{self.user.username} ({self.role} at {self.hospital.name})"
 
 
+class UserSalary(models.Model):
+    user_info = models.ForeignKey(
+        UserInfo, on_delete=models.CASCADE, related_name="salary_info"
+    )
+    base_salary = models.DecimalField(max_digits=10, decimal_places=2)
+    bonuses = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    deductions = models.DecimalField(max_digits=10, decimal_places=2, default=0)
+    total_salary = models.DecimalField(max_digits=10, decimal_places=2, editable=False)
+    last_payment_date = models.DateField(null=True, blank=True)
+    next_payment_date = models.DateField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    def save(self, *args, **kwargs):
+        self.total_salary = self.base_salary + self.bonuses - self.deductions
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.user_info.user.username} - Salary"
+
+
 class WorkDay(models.Model):
     DAYS_OF_THE_WEEK = [
         ("MON", "Monday"),
