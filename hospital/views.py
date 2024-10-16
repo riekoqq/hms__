@@ -7,11 +7,18 @@ from .forms import (
 from .models import Hospital, Patient
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseForbidden
 from django.shortcuts import render
 
 
 @login_required
 def hospital_page(request):
+
+    allowed_groups = ["staff"]
+
+    if not request.user.groups.filter(name__in=allowed_groups).exists():
+        return HttpResponseForbidden("You are not authorized to view this page.")
+
     hospitals = Hospital.objects.all()
 
     context = {}
@@ -21,6 +28,12 @@ def hospital_page(request):
 
 @login_required
 def hospital_detail_page(request, hospital_id):
+
+    allowed_groups = ["staff"]
+
+    if not request.user.groups.filter(name__in=allowed_groups).exists():
+        return HttpResponseForbidden("You are not authorized to view this page.")
+
     hospital = Hospital.objects.get(pk=hospital_id)
 
     context = {}
@@ -31,6 +44,12 @@ def hospital_detail_page(request, hospital_id):
 
 @login_required
 def transfer_page(request):
+
+    allowed_groups = ["staff"]
+
+    if not request.user.groups.filter(name__in=allowed_groups).exists():
+        return HttpResponseForbidden("You are not authorized to view this page.")
+
     if request.method == "POST":
         form = PatientTransferForm(request.POST)
         if form.is_valid():
@@ -54,11 +73,23 @@ def transfer_page(request):
 
 @login_required
 def manage_patient_page(request):
+
+    allowed_groups = ["staff"]
+
+    if not request.user.groups.filter(name__in=allowed_groups).exists():
+        return HttpResponseForbidden("You are not authorized to view this page.")
+
     return render(request, "hospital/manage-patient.html")
 
 
 @login_required
 def patient_detail_page(request, patient_id):
+
+    allowed_groups = ["staff"]
+
+    if not request.user.groups.filter(name__in=allowed_groups).exists():
+        return HttpResponseForbidden("You are not authorized to view this page.")
+
     patient = Patient.objects.get(pk=patient_id)
     medical_records = patient.medical_records.all()
 
@@ -73,6 +104,12 @@ def patient_detail_page(request, patient_id):
 
 @login_required
 def add_patient_page(request):
+
+    allowed_groups = ["staff"]
+
+    if not request.user.groups.filter(name__in=allowed_groups).exists():
+        return HttpResponseForbidden("You are not authorized to view this page.")
+
     if request.method == "POST":
         form = PatientForm(request.POST)
         if form.is_valid():
@@ -93,6 +130,12 @@ def add_patient_page(request):
 
 @login_required
 def admission_discharge_page(request):
+
+    allowed_groups = ["staff"]
+
+    if not request.user.groups.filter(name__in=allowed_groups).exists():
+        return HttpResponseForbidden("You are not authorized to view this page.")
+
     if request.method == "POST":
         form = PatientStatusUpdateForm(request.POST)
         if form.is_valid():
@@ -113,6 +156,12 @@ def admission_discharge_page(request):
 
 @login_required
 def add_medical_record_page(request):
+
+    allowed_groups = ["staff"]
+
+    if not request.user.groups.filter(name__in=allowed_groups).exists():
+        return HttpResponseForbidden("You are not authorized to view this page.")
+
     if request.method == "POST":
         form = MedicalRecordForm(request.POST)
 

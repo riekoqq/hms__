@@ -1,7 +1,8 @@
 from hospital.models import Hospital, Patient
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.core.paginator import Paginator
+from django.http import HttpResponseForbidden
 from django.shortcuts import render
 
 
@@ -9,6 +10,11 @@ from django.shortcuts import render
 def home_page(request):
     user = request.user
     context = {}
+
+    allowed_groups = ["staff", "patient"]
+
+    if not request.user.groups.filter(name__in=allowed_groups).exists():
+        return HttpResponseForbidden("You are not authorized to view this page.")
 
     if user.is_staff:
         hospitals = Hospital.objects.all().order_by("-created_at")
@@ -46,6 +52,11 @@ def home_page(request):
 def profile_page(request):
     user = request.user
     context = {}
+
+    allowed_groups = ["staff", "patient"]
+
+    if not request.user.groups.filter(name__in=allowed_groups).exists():
+        return HttpResponseForbidden("You are not authorized to view this page.")
 
     if user.is_staff:
         user_info = user.user_info

@@ -3,6 +3,7 @@ from account.models import Attendance
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.http import HttpResponseForbidden
 from django.shortcuts import render
 from django.utils import timezone
 
@@ -10,6 +11,10 @@ from django.utils import timezone
 # Create your views here.
 @login_required
 def time_in_page(request):
+    allowed_groups = ["time-in-time-out-manager"]
+
+    if not request.user.groups.filter(name__in=allowed_groups).exists():
+        return HttpResponseForbidden("You are not authorized to view this page.")
 
     if request.method == "POST":
         form = TimeInForm(request.POST)
@@ -42,6 +47,11 @@ def time_in_page(request):
 @login_required
 def time_out_page(request):
 
+    allowed_groups = ["time-in-time-out-manager"]
+
+    if not request.user.groups.filter(name__in=allowed_groups).exists():
+        return HttpResponseForbidden("You are not authorized to view this page.")
+
     if request.method == "POST":
         form = TimeOutForm(request.POST)
         user_id = None
@@ -71,6 +81,12 @@ def time_out_page(request):
 
 @login_required
 def attendance_history_page(request):
+
+    allowed_groups = ["staff"]
+
+    if not request.user.groups.filter(name__in=allowed_groups).exists():
+        return HttpResponseForbidden("You are not authorized to view this page.")
+
     user = request.user
     user_info = user.user_info
     attendance_records = user_info.attendance_records.all().order_by("-date")
@@ -82,15 +98,32 @@ def attendance_history_page(request):
 
 @login_required
 def shift_schedule_page(request):
+
+    allowed_groups = ["staff"]
+
+    if not request.user.groups.filter(name__in=allowed_groups).exists():
+        return HttpResponseForbidden("You are not authorized to view this page.")
+
     user = request.user
     user_info = user.user_info
-    shift_schedules = user_info.shift_schedules.all()[0].get_shift_schedule_array()
+    shift_schedules = []
+
+    try:
+        shift_schedules = user_info.shift_schedules.all()[0].get_shift_schedule_array()
+    except:
+        shift_schedules = []
 
     return render(request, "staff/shift-schedule.html", {"shift": shift_schedules})
 
 
 @login_required
 def payroll_page(request):
+
+    allowed_groups = ["staff"]
+
+    if not request.user.groups.filter(name__in=allowed_groups).exists():
+        return HttpResponseForbidden("You are not authorized to view this page.")
+
     user_info = request.user.user_info
 
     return render(
