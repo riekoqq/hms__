@@ -1,0 +1,92 @@
+{% extends "layout/base.html" %}
+{% load static %}
+
+{% block heading_action %}
+    <!-- No action buttons here -->
+{% endblock heading_action %}
+
+{% block content %}
+    <div class="container">
+        <div class="page-inner">
+            <div class="row">
+                <!-- Inventory Header -->
+                <div class="col-md-12">
+                    <div class="card" style="max-width: 600px; margin: 20px auto; padding: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); border-radius: 8px;">
+                        <div class="card-header" style="padding: 10px;">
+                            <h3 class="fw-bold" style="margin-bottom: 10px; color: black;">Hospital Inventory</h3> <!-- Changed font color -->
+                            <nav class="navbar inventory-nav navbar-expand-lg navbar-light" style="padding: 0;">
+                                <ul class="navbar-nav d-flex justify-content-between w-100" style="list-style: none; padding: 0; margin: 0;">
+                                    <li class="nav-item"><a class="nav-link" href="{% url 'inventory:category_list' %}" style="padding: 5px 10px; color: black;">Categories</a></li> <!-- Changed font color -->
+                                    <li class="nav-item"><a class="nav-link" href="{% url 'inventory:supplier_list' %}" style="padding: 5px 10px; color: black;">Suppliers</a></li> <!-- Changed font color -->
+                                    <li class="nav-item"><a class="nav-link" href="{% url 'inventory:item_list' %}" style="padding: 5px 10px; color: black;">Items</a></li> <!-- Changed font color -->
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="row">
+                <!-- Items Section -->
+                <div class="col-md-6 mb-4"> <!-- Added margin-bottom for spacing -->
+                    <div class="card h-100"> <!-- h-100 ensures full height -->
+                        <div class="card-header">
+                            <h4>Items</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group">
+                                {% for item in items %}
+                                    <li class="list-group-item">{{ item.name }} - {{ item.quantity }} available</li>
+                                {% empty %}
+                                    <li class="list-group-item">No items found.</li>
+                                {% endfor %}
+                            </ul>
+                            <a href="{% url 'inventory:item_create' %}" class="btn btn-primary mt-3">Add New Item</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Manage Categories Section -->
+                <div class="col-md-6 mb-4"> <!-- Added margin-bottom for spacing -->
+                    <div class="card h-100"> <!-- h-100 ensures full height -->
+                        <div class="card-header">
+                            <h4>Categories</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group">
+                                {% for category in categories %}
+                                    <li class="list-group-item">{{ category.name }} - {{ category.description }}</li>
+                                {% empty %}
+                                    <li class="list-group-item">No categories found.</li>
+                                {% endfor %}
+                            </ul>
+                            <a href="{% url 'inventory:category_create' %}" class="btn btn-primary mt-3">Add New Category</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Manage Suppliers Section -->
+                <div class="col-md-6 mb-4"> <!-- Added margin-bottom for spacing -->
+                    <div class="card h-100"> <!-- h-100 ensures full height -->
+                        <div class="card-header">
+                            <h4>Suppliers</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-group">
+                                {% for supplier in suppliers %}
+                                    <li class="list-group-item">{{ supplier.name }} - {{ supplier.contact_name }} - {{ supplier.phone_number }}</li>
+                                {% empty %}
+                                    <li class="list-group-item">No suppliers found.</li>
+                                {% endfor %}
+                            </ul>
+                            <a href="{% url 'inventory:supplier_create' %}" class="btn btn-primary mt-3">Add New Supplier</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

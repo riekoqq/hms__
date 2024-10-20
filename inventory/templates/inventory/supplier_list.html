@@ -1,0 +1,15 @@
+{% extends 'layout/base.html' %}
+{% block content %}
+<div class="container">
+    <h1>Suppliers</h1>
+    <a href="{% url 'inventory:supplier_create' %}" class="btn btn-primary">Add Supplier</a>
+    <ul>
+        {% for supplier in suppliers %}
+            <li>{{ supplier.name }} - 
+                <a href="{% url 'inventory:supplier_update' supplier.pk %}">Edit</a> -
+                <a href="{% url 'inventory:supplier_delete' supplier.pk %}">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

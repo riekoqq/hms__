@@ -4,6 +4,7 @@ from django.contrib.auth.models import User, Group
 from django.core.paginator import Paginator
 from django.http import HttpResponseForbidden
 from django.shortcuts import render
+from inventory.views import inventory_home
 
 
 @login_required
@@ -44,6 +45,7 @@ def home_page(request):
 
         context["patient"] = patient
         context["medical_records"] = medical_records
+        context["inventory_home"] = inventory_home
 
     return render(request, "app/index.html", context)
 

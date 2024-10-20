@@ -1,0 +1,15 @@
+{% extends 'layout/base.html' %}
+{% block content %}
+<div class="container">
+    <h1>Items</h1>
+    <a href="{% url 'inventory:item_create' %}" class="btn btn-primary">Add Item</a>
+    <ul>
+        {% for item in items %}
+            <li>{{ item.name }} - 
+                <a href="{% url 'inventory:item_update' item.pk %}">Edit</a> -
+                <a href="{% url 'inventory:item_delete' item.pk %}">Delete</a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

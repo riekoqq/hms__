@@ -7,4 +7,5 @@ urlpatterns = [
     path("hospital/", include("hospital.urls")),
     path("profile/", views.profile_page, name="profile"),
     path("staff/", include("staff.urls")),
+    path("inventory/", include("inventory.urls"), name="inventory"),
 ]
