@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.models import User
+from django.contrib.auth.models import Group, User
 from .models import Hospital, Patient, MedicalRecord, PatientTransfer
 
 
@@ -49,6 +49,9 @@ class PatientForm(forms.ModelForm):
         username = self.cleaned_data["username"]
         password = self.cleaned_data["password"]
         user = User.objects.create_user(username=username, password=password)
+
+        patient_group = Group.objects.get(name="patient")
+        user.groups.add(patient_group)
 
         patient = super().save(commit=False)
         patient.user = user
