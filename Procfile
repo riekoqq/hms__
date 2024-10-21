@@ -1,1 +1,1 @@
-web: gunicorn hms__.wsgi
+web: gunicorn hms__.wsgi --log-file -
