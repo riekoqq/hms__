@@ -13,7 +13,7 @@ SECRET_KEY = "django-insecure-oi(o^)eu5@^go10%=ho_(yy+k!5#stsyu0a%k+35=j6zc+m9*i
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['herokuapp.com']
 
 
 # Application definition
@@ -127,3 +127,13 @@ LOGIN_URL = "account:login"
 LOGOUT_REDIRECT_URL = "account:login"
 
 LOGIN_REDIRECT_URL = "home"
+
+CORS_REPLACE_HTTPS_REFERER      = False
+HOST_SCHEME                     = "http://"
+SECURE_PROXY_SSL_HEADER         = None
+SECURE_SSL_REDIRECT             = False
+SESSION_COOKIE_SECURE           = False
+CSRF_COOKIE_SECURE              = False
+SECURE_HSTS_SECONDS             = None
+SECURE_HSTS_INCLUDE_SUBDOMAINS  = False
+SECURE_FRAME_DENY               = False
